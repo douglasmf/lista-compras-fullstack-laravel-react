@@ -1,9 +1,8 @@
 FROM php:8.2-cli
 
-# diretório da aplicação
-WORKDIR /var/www
+WORKDIR /app
 
-# instalar dependências do sistema
+# dependências do sistema
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
@@ -14,25 +13,26 @@ RUN apt-get update && apt-get install -y \
 # instalar composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# copiar arquivos do projeto
+# copiar projeto
 COPY . .
 
 # instalar dependências do laravel
 RUN composer install --no-dev --optimize-autoloader
 
-# garantir permissões necessárias
-RUN chmod -R 775 storage bootstrap/cache
+# criar banco sqlite no container
+RUN mkdir -p /app/database
+RUN touch /app/database/database.sqlite
 
-# criar banco sqlite se não existir
-RUN mkdir -p database && touch database/database.sqlite
-
-# otimizações do laravel
-RUN php artisan config:clear
-RUN php artisan route:clear
-RUN php artisan config:cache
+# permissões necessárias
+RUN chmod -R 775 storage bootstrap/cache database
 
 # rodar migrations
 RUN php artisan migrate --force
+
+# limpar e gerar cache
+RUN php artisan config:clear \
+ && php artisan route:clear \
+ && php artisan config:cache
 
 # porta usada pelo render
 EXPOSE 10000
