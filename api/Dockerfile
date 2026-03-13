@@ -2,11 +2,12 @@ FROM php:8.2-cli
 
 WORKDIR /app
 
-# dependências do sistema
+# instalar dependências do sistema
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
     libzip-dev \
+    libsqlite3-dev \
     sqlite3 \
     && docker-php-ext-install zip pdo pdo_sqlite
 
@@ -19,9 +20,8 @@ COPY . .
 # instalar dependências do laravel
 RUN composer install --no-dev --optimize-autoloader
 
-# criar banco sqlite no container
-RUN mkdir -p /app/database
-RUN touch /app/database/database.sqlite
+# garantir banco sqlite
+RUN mkdir -p /app/database && touch /app/database/database.sqlite
 
 # permissões necessárias
 RUN chmod -R 775 storage bootstrap/cache database
@@ -34,7 +34,7 @@ RUN php artisan config:clear \
  && php artisan route:clear \
  && php artisan config:cache
 
-# porta usada pelo render
+# porta usada pelo Render
 EXPOSE 10000
 
 # iniciar servidor
