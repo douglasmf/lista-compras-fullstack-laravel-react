@@ -207,6 +207,6 @@ Este projeto foi criado para demonstrar:
 ## 👨‍💻 Autor
 
 Douglas Monteiro
-Desenvolvedor Front-end / Back-end Júnior
+Desenvolvedor Front-end Júnior / Full Stack Júnior
 
 Projeto desenvolvido para fins de estudo e portfólio.
