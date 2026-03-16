@@ -1,73 +1,120 @@
-# React + TypeScript + Vite
+# 🛒 Lista de Compras - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Interface web da aplicação **Lista de Compras**, desenvolvida em React.
+O sistema permite criar listas, adicionar produtos e acompanhar automaticamente o valor total da compra.
 
-Currently, two official plugins are available:
+O frontend consome uma API REST desenvolvida em Laravel.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+# 🚀 Tecnologias Utilizadas
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* React
+* TypeScript
+* Styled Components
+* Axios
+* Vite
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+# 📦 Funcionalidades
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+* Criar novas listas de compras
+* Visualizar listas cadastradas
+* Adicionar produtos a uma lista
+* Editar produtos
+* Remover produtos
+* Atualização automática do valor total da lista
+* Interface simples e responsiva
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# 🔗 Integração com API
+
+O frontend consome a API desenvolvida em Laravel.
+
+Base URL da API em produção:
+
+```
+https://lista-compras-fullstack-laravel-react.onrender.com/api
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+A comunicação com a API é feita utilizando **Axios**.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+
+# ⚙️ Instalação e Execução
+
+Clone o repositório:
+
+```bash
+git clone https://github.com/douglasmf/lista-compras-fullstack-laravel-react.git
+```
+
+Acesse a pasta do frontend:
+
+```bash
+cd frontend
+```
+
+Instale as dependências:
+
+```bash
+npm install
+```
+
+Execute o projeto:
+
+```bash
+npm run dev
+```
+
+A aplicação estará disponível em:
+
+```
+http://localhost:5173
+```
+
+---
+
+# 🧠 Arquitetura do Projeto
+
+A aplicação foi organizada em camadas para facilitar manutenção e escalabilidade.
+
+**Components**
+
+* Componentes reutilizáveis da interface
+
+**Pages**
+
+* Estrutura das páginas da aplicação
+
+**Services**
+
+* Comunicação com a API
+
+**Styles**
+
+* Estilização utilizando Styled Components
+
+---
+
+# 🎯 Objetivo do Projeto
+
+Este projeto foi desenvolvido com o objetivo de demonstrar conhecimentos em:
+
+* React com TypeScript
+* Consumo de APIs REST
+* Gerenciamento de estado com Redux Toolkit
+* Organização de projeto frontend
+* Integração com backend Laravel
+* Desenvolvimento de aplicações fullstack
+
+---
+
+# 👨‍💻 Autor
+
+Douglas Monteiro
+Desenvolvedor Front-end Júnior / Full Stack Júnior
+
+Projeto desenvolvido para fins de estudo e portfólio.
