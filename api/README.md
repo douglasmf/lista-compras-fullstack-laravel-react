@@ -1,59 +1,212 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🛒 Lista de Compras API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+API REST desenvolvida em Laravel para gerenciamento de listas de compras.
+O sistema permite criar listas, adicionar produtos a cada lista e calcular automaticamente o valor total com base nos itens cadastrados.
 
-## About Laravel
+## 🚀 Tecnologias Utilizadas
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+* PHP 8.2
+* Laravel 12
+* PostgreSQL
+* Eloquent ORM
+* API REST
+* Insomnia (para testes)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## ⚙️ Instalação e Execução
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Clone o repositório:
 
-## Learning Laravel
+```bash
+git clone https://github.com/douglasmf/lista-compras-api.git
+cd lista-compras-api
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+Instale as dependências:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+composer install
+```
 
-## Laravel Sponsors
+Crie o arquivo de ambiente:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+cp .env.example .env
+```
 
-### Premium Partners
+Configure as variáveis de ambiente do banco de dados no arquivo `.env`:
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```env
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=lista_compras
+DB_USERNAME=postgres
+DB_PASSWORD=senha
+```
 
-## Contributing
+Gere a chave da aplicação:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+php artisan key:generate
+```
 
-## Code of Conduct
+Execute as migrations e seeders:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+php artisan migrate:fresh --seed
+```
 
-## Security Vulnerabilities
+Inicie o servidor:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+php artisan serve
+```
 
-## License
+A API estará disponível em:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```
+http://127.0.0.1:8000
+```
+
+---
+
+## ☁️ Deploy
+
+A API está hospedada utilizando:
+
+* Render (backend)
+* PostgreSQL (banco de dados)
+
+URL base da API em produção:
+
+```
+https://lista-compras-fullstack-laravel-react.onrender.com
+```
+
+---
+
+## 🗄️ Estrutura do Banco de Dados
+
+### Tabela listas
+
+| Campo       | Tipo      | Descrição                             |
+| ----------- | --------- | ------------------------------------- |
+| id          | bigint    | Identificador da lista                |
+| nome        | string    | Nome da lista                         |
+| valor_total | decimal   | Valor total calculado automaticamente |
+| created_at  | timestamp | Data de criação                       |
+| updated_at  | timestamp | Data de atualização                   |
+
+### Tabela produtos
+
+| Campo      | Tipo      | Descrição                  |
+| ---------- | --------- | -------------------------- |
+| id         | bigint    | Identificador do produto   |
+| lista_id   | bigint    | Chave estrangeira da lista |
+| nome       | string    | Nome do produto            |
+| valor      | decimal   | Valor do produto           |
+| created_at | timestamp | Data de criação            |
+| updated_at | timestamp | Data de atualização        |
+
+### Relacionamento
+
+* Uma **Lista** possui vários **Produtos**
+* Um **Produto** pertence a uma **Lista**
+
+---
+
+## 🧠 Arquitetura do Projeto
+
+O projeto segue uma separação de responsabilidades para manter o código organizado e escalável.
+
+**Controllers**
+
+* Recebem as requisições HTTP
+* Chamam as regras de negócio
+* Retornam respostas da API
+
+**Requests**
+
+* Responsáveis pela validação dos dados recebidos
+
+**Resources**
+
+* Padronizam as respostas JSON da API
+
+**Services**
+
+* Centralizam regras de negócio
+* Exemplo: recalcular o valor total da lista
+
+**Models**
+
+* Representam as tabelas do banco
+* Definem relacionamentos entre entidades
+
+Essa arquitetura melhora a manutenção, reutilização de código e organização do projeto.
+
+---
+
+## 🔗 Endpoints da API
+
+### Listas
+
+| Método | Endpoint            | Descrição              |
+| ------ | ------------------- | ---------------------- |
+| GET    | /api/listas         | Listar todas as listas |
+| POST   | /api/listas         | Criar uma nova lista   |
+| GET    | /api/listas/{lista} | Exibir uma lista       |
+| PUT    | /api/listas/{lista} | Atualizar uma lista    |
+| DELETE | /api/listas/{lista} | Remover uma lista      |
+
+### Produtos
+
+| Método | Endpoint                               | Descrição                |
+| ------ | -------------------------------------- | ------------------------ |
+| GET    | /api/listas/{lista}/produtos           | Listar produtos da lista |
+| POST   | /api/listas/{lista}/produtos           | Criar produto            |
+| GET    | /api/listas/{lista}/produtos/{produto} | Exibir produto           |
+| PUT    | /api/listas/{lista}/produtos/{produto} | Atualizar produto        |
+| DELETE | /api/listas/{lista}/produtos/{produto} | Remover produto          |
+
+---
+
+## 🧪 Testes
+
+As requisições foram testadas utilizando o **Insomnia**, simulando operações completas de:
+
+* criação
+* leitura
+* atualização
+* exclusão
+
+---
+
+## 💡 Regras de Negócio
+
+* Sempre que um produto é **criado**, **atualizado** ou **removido**, o valor total da lista é recalculado automaticamente
+* Essa lógica fica centralizada no **ListaService**
+* O valor total nunca é informado manualmente pela API
+
+---
+
+## 🎯 Objetivo do Projeto
+
+Este projeto foi criado para demonstrar:
+
+* Desenvolvimento de API REST com Laravel
+* CRUD completo
+* Relacionamento entre tabelas
+* Organização de código em camadas
+* Uso de Services para regras de negócio
+* Integração com banco de dados PostgreSQL
+* Deploy de API em ambiente cloud
+
+---
+
+## 👨‍💻 Autor
+
+Douglas Monteiro
+Desenvolvedor Front-end / Back-end Júnior
+
+Projeto desenvolvido para fins de estudo e portfólio.
