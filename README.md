@@ -22,7 +22,7 @@ Infraestrutura
 
 Frontend: https://listacompras-rosy-nine.vercel.app
 
-API: https://lista-compras-fullstack-laravel-react.onrender.com
+API: https://lista-compras-fullstack-laravel-react.onrender.com/api
 
 ## 📂 Estrutura
 
